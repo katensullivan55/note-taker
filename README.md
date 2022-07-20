@@ -1,9 +1,13 @@
 # Note Taker
-    Node.js, Express.js
+Node.js, Express.js
+
 <img width="1454" alt="Screen Shot 2022-07-20 at 4 30 07 PM" src="https://user-images.githubusercontent.com/93236563/180075882-9232bf78-cb3f-448c-b574-128982d661e9.png">
  
 ## About:
-    App to write, save, and delete notes
+App to write, save, and delete notes
+
+## Contribute
+Submit an issue or contact me at katensullivan55@gmail.com
  
 ## Deployment
 
