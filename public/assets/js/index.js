@@ -1,15 +1,15 @@
-let noteTitle;
-let noteText;
-let saveNoteBtn;
-let newNoteBtn;
-let noteList;
+let titleNote;
+let noteTxt;
+let btnsvNote;
+let btnnewNote;
+let listNote;
 
 if (window.location.pathname === '/notes') {
-  noteTitle = document.querySelector('.note-title');
-  noteText = document.querySelector('.note-textarea');
-  saveNoteBtn = document.querySelector('.save-note');
-  newNoteBtn = document.querySelector('.new-note');
-  noteList = document.querySelectorAll('.list-container .list-group');
+  titleNote = document.querySelector('.title-note');
+  noteTxt = document.querySelector('.note-txt');
+  btnsvNote = document.querySelector('.svnt');
+  btnnewNote = document.querySelector('.note-new');
+  listNote = document.querySelectorAll('.cont-list .grp-list');
 }
 
 // Show
@@ -23,7 +23,7 @@ const hide = (elem) => {
 };
 
 // tracks note in textarea
-let activeNote = {};
+let noteAct = {};
 
 const getNotes = () =>
   fetch('/api/notes', {
@@ -50,30 +50,30 @@ const deleteNote = (id) =>
     },
   });
 
-const renderActiveNote = () => {
-  hide(saveNoteBtn);
+const rendernoteAct = () => {
+  hide(btnsvNote);
 
-  if (activeNote.id) {
-    noteTitle.setAttribute('readonly', true);
-    noteText.setAttribute('readonly', true);
-    noteTitle.value = activeNote.title;
-    noteText.value = activeNote.text;
+  if (noteAct.id) {
+    titleNote.setAttribute('readonly', true);
+    noteTxt.setAttribute('readonly', true);
+    titleNote.value = noteAct.title;
+    noteTxt.value = noteAct.text;
   } else {
-    noteTitle.removeAttribute('readonly');
-    noteText.removeAttribute('readonly');
-    noteTitle.value = '';
-    noteText.value = '';
+    titleNote.removeAttribute('readonly');
+    noteTxt.removeAttribute('readonly');
+    titleNote.value = '';
+    noteTxt.value = '';
   }
 };
 
 const handleNoteSave = () => {
   const newNote = {
-    title: noteTitle.value,
-    text: noteText.value,
+    title: titleNote.value,
+    text: noteTxt.value,
   };
   saveNote(newNote).then(() => {
     getAndRenderNotes();
-    renderActiveNote();
+    rendernoteAct();
   });
 };
 
@@ -85,45 +85,45 @@ const handleNoteDelete = (e) => {
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
 
-  if (activeNote.id === noteId) {
-    activeNote = {};
+  if (noteAct.id === noteId) {
+    noteAct = {};
   }
 
   deleteNote(noteId).then(() => {
     getAndRenderNotes();
-    renderActiveNote();
+    rendernoteAct();
   });
 };
 
-// activeNote set
+// noteAct set
 const handleNoteView = (e) => {
   e.preventDefault();
-  activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
-  renderActiveNote();
+  noteAct = JSON.parse(e.target.parentElement.getAttribute('data-note'));
+  rendernoteAct();
 };
 
 // allows user to enter new note
 const handleNewNoteView = (e) => {
-  activeNote = {};
-  renderActiveNote();
+  noteAct = {};
+  rendernoteAct();
 };
 
 const handleRenderSaveBtn = () => {
-  if (!noteTitle.value.trim() || !noteText.value.trim()) {
-    hide(saveNoteBtn);
+  if (!titleNote.value.trim() || !noteTxt.value.trim()) {
+    hide(btnsvNote);
   } else {
-    show(saveNoteBtn);
+    show(btnsvNote);
   }
 };
 
 // renders note titles
-const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
+const renderlistNote = async (notes) => {
+  let noteJson = await notes.json();
   if (window.location.pathname === '/notes') {
-    noteList.forEach((el) => (el.innerHTML = ''));
+    listNote.forEach((el) => (el.innerHTML = ''));
   }
 
-  let noteListItems = [];
+  let noteitemList = [];
 
   // return HTML element
   const createLi = (text, delBtn = true) => {
@@ -154,30 +154,30 @@ const renderNoteList = async (notes) => {
     return liEl;
   };
 
-  if (jsonNotes.length === 0) {
-    noteListItems.push(createLi('No saved Notes', false));
+  if (noteJson.length === 0) {
+    noteitemList.push(createLi('No saved Notes', false));
   }
 
-  jsonNotes.forEach((note) => {
+  noteJson.forEach((note) => {
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
 
-    noteListItems.push(li);
+    noteitemList.push(li);
   });
 
   if (window.location.pathname === '/notes') {
-    noteListItems.forEach((note) => noteList[0].append(note));
+    noteitemList.forEach((note) => listNote[0].append(note));
   }
 };
 
 // gets notes from the db.json
-const getAndRenderNotes = () => getNotes().then(renderNoteList);
+const getAndRenderNotes = () => getNotes().then(renderlistNote);
 
 if (window.location.pathname === '/notes') {
-  saveNoteBtn.addEventListener('click', handleNoteSave);
-  newNoteBtn.addEventListener('click', handleNewNoteView);
-  noteTitle.addEventListener('keyup', handleRenderSaveBtn);
-  noteText.addEventListener('keyup', handleRenderSaveBtn);
+  btnsvNote.addEventListener('click', handleNoteSave);
+  btnnewNote.addEventListener('click', handleNewNoteView);
+  titleNote.addEventListener('keyup', handleRenderSaveBtn);
+  noteTxt.addEventListener('keyup', handleRenderSaveBtn);
 }
 
 getAndRenderNotes();

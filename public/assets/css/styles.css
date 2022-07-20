@@ -5,7 +5,7 @@ body {
   padding: 0;
 }
 
-.save-note {
+.svnt {
   display: none;
 }
 
@@ -16,45 +16,45 @@ body {
   cursor: pointer;
 }
 
-.note-textarea,
-.note-title {
+.note-txt,
+.title-note {
   color: #000000;
   width: 100%;
   outline: none;
   border: none;
 }
 
-.note-textarea {
+.note-txt {
   resize: none;
   height: calc(100% - 63px);
   padding-top: 15px;
 }
 
-.note-title {
+.title-note {
   height: 50px;
   margin-top: 13px;
   font-size: 3rem;
 }
 
-.note-title:read-only,
-.note-textarea:read-only {
+.title-note:read-only,
+.note-txt:read-only {
   color: #757575;
 }
 
-.list-container .card {
+.cont-list .card {
   height: calc(100vh - 70px);
   border-bottom: none;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.list-container {
+.cont-list {
   padding-left: 0;
 }
 
-.list-container .list-group,
-.list-container .list-group-item:first-child,
-.list-container .card {
+.cont-list .grp-list,
+.cont-list .grp-list-item:first-child,
+.cont-list .card {
   border-top: none;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
@@ -65,12 +65,12 @@ body {
   width: 75%;
 }
 
-.list-container i {
+.cont-list i {
   font-size: 1.1rem;
   cursor: pointer;
 }
 
-.list-container .list-group-item {
+.cont-list .grp-list-item {
   border-left: none;
   border-right: none;
   padding: 20px;
